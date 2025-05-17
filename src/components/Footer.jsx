@@ -24,7 +24,7 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="relative overflow-hidden bg-[#1D4ED8] p-5"
+      className="relative overflow-hidden bg-[#00026e] p-5"
     >
       <div className="absolute w-[200px] h-[200px] bg-white/10 rounded-full top-[-100px] left-[-100px] z-0"></div>
       <div className="relative  w-11/12 mx-auto">
