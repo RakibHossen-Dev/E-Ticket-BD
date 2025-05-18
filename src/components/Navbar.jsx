@@ -37,9 +37,9 @@ const Navbar = () => {
           <div className="hidden md:block">
             <ul className="flex items-center md:gap-8 lg:gap-12">
               {navItems.map((item, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  <span className="text-gray-800">{item.icon}</span>
-                  <span className="text-sm font-medium text-gray-900">
+                <li key={index} className="flex items-center gap-2 ">
+                  <span className="text-gray-700 ">{item.icon}</span>
+                  <span className="text-sm font-semibold cursor-pointer text-gray-900 hover:text-[#00026e]">
                     {item.name}
                   </span>
                 </li>
