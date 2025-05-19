@@ -1,141 +1,220 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { MdMenu, MdClose, MdDirectionsBus, MdTrain, MdDirectionsBoat, MdContacts } from "react-icons/md";
-import { RiHotelFill } from "react-icons/ri";
+import Image from 'next/image';
+import { useState } from 'react';
 
-const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const [open, setOpen] = useState(false);
+const Save = () => {
+    const [activeTab, setActiveTab] = useState('hotel');
+    const [searchQuery, setSearchQuery] = useState('');
 
-  const navItems = [
-    { name: "Bus", icon: <MdDirectionsBus className="text-[24px]" /> },
-    { name: "Hotel", icon: <RiHotelFill className="text-[24px]" /> },
-    { name: "Train", icon: <MdTrain className="text-[24px]" /> },
-    { name: "Ship", icon: <MdDirectionsBoat className="text-[24px]" /> },
-    { name: "Contact", icon: <MdContacts className="text-[24px]" /> },
-  ];
+    const renderSearchForm = () => {
+        switch (activeTab) {
+            case 'hotel':
+                return (
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                        {/* Destination */}
+                        <div className="bg-white p-4 rounded-lg shadow col-span-3 md:col-span-1">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Destination</label>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="City, Hotel, or Area"
+                            />
+                        </div>
 
-  return (
-    <>
-      <nav className="border-b sticky top-0 backdrop-blur-sm bg-white z-50">
-        <div className="w-11/12 mx-auto flex justify-between items-center py-3">
-          {/* logo section */}
-          <div className="flex items-center gap-2">
-            <Image
-              src="/e-ticket.png"
-              alt="ET-ticket BD logo"
-              width={150}
-              height={40}
-              priority
-            />
-          </div>
+                        {/* Check In/Out - will appear as one combined column on md+ screens */}
+                        <div className="bg-white p-4 rounded-lg shadow col-span-3 md:col-span-2 grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Check In</label>
+                                <input
+                                    type="date"
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Check Out</label>
+                                <input
+                                    type="date"
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+                        </div>
 
-          {/* Menu section for larger screens */}
-          <div className="hidden lg:block">
-            <ul className="flex items-center gap-10">
-              {navItems.map((item, index) => (
-                <li key={index} className="flex items-center gap-2">
-                  <span className=" text-gray-800">
-                    {item.icon}
-                  </span>
-                  <span className="text-sm font-medium  text-gray-900">
-                    {item.name}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+                        {/* Rooms & Guests */}
+                        <div className="bg-white p-4 rounded-lg shadow col-span-3 md:col-span-1">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Rooms & Guests</label>
+                            <select className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>1 Room, 2 Guests</option>
+                                <option>1 Room, 1 Guest</option>
+                                <option>2 Rooms, 4 Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                );
 
-          {/* Auth buttons and mobile menu */}
-          <div className="flex items-center gap-4">
-            {
-              <>
-                <button onClick={toggleDropdown} className="lg:flex items-center text-sm rounded-full hidden">
-                  <img
-                    referrerPolicy="no-referrer"
-                    src=""
-                    alt="User"
-                    className="w-[42px] h-[42px] bg-green-500 rounded-full"
-                  />
-                </button>
+            case 'bus':
+                return (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">From</label>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Departure City"
+                            />
+                        </div>
 
-                <button className='hidden md:block font-semibold rounded-md border-2 px-3 py-1 border-secondary hover:bg-secondary hover:text-white'>
-                  Login
-                </button>
-              </>
-            }
-            {
-              isDropdownOpen && (
-                <div className="z-50 my-4 text-base list-none bg-white rounded-sm shadow w-44 absolute top-[58px] right-[64px]">
-                  <div className="px-4 py-3">
-                    <span className="block">Jahid Hasan</span>
-                  </div>
-                  <ul className="py-1">
-                    <li className="block px-4 py-2 hover:bg-gray-100">Profile</li>
-                    <li className="block px-4 py-2 hover:bg-gray-100">My Booking</li>
-                    <li className="block px-4 py-2 hover:bg-gray-100">Saved</li>
+                        <div className="bg-white p-4 rounded-lg shadow">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">To</label>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Destination City"
+                            />
+                        </div>
 
-                    <hr />
-                    <li className="block w-full text-left px-4 py-2 hover:bg-gray-100"> Sign Out</li>
-                  </ul>
+                        <div className="bg-white p-4 rounded-lg shadow">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Journey Date</label>
+                            <input
+                                type="date"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                    </div>
+                );
+
+            case 'train':
+                return (
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow col-span-3 md:col-span-1">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">From Station</label>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Departure Station"
+                            />
+                        </div>
+
+                        <div className='bg-white p-4 rounded-lg shadow col-span-3 md:col-span-2 grid grid-cols-2 gap-4'>
+                            <div className="">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">To Station</label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Destination Station"
+                                />
+                            </div>
+
+                            <div className="">
+                                <label className="block text-gray-700 text-sm font-bold mb-2">Journey Date</label>
+                                <input
+                                    type="date"
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                        </div>
+
+                        <div className="bg-white p-4 rounded-lg shadow col-span-3 md:col-span-1">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Class</label>
+                            <select className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>Any Class</option>
+                                <option>AC</option>
+                                <option>Non-AC</option>
+                                <option>Shovon</option>
+                            </select>
+                        </div>
+                    </div>
+                );
+
+            case 'ship':
+                return (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white p-4 rounded-lg shadow">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">From Port</label>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Departure Port"
+                            />
+                        </div>
+
+                        <div className="bg-white p-4 rounded-lg shadow">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">To Port</label>
+                            <input
+                                type="text"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Destination Port"
+                            />
+                        </div>
+
+                        <div className="bg-white p-4 rounded-lg shadow">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Journey Date</label>
+                            <input
+                                type="date"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        </div>
+                    </div>
+                );
+
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="w-full relative overflow-hidden h-[600px]">
+            {/* Background image can be added here */}
+            <div className="absolute inset-0 w-full h-full">
+                <Image
+                    src="/beach2.jpg"
+                    alt='beach'
+                    fill={true}
+                    style={{ objectFit: 'cover' }}
+                    priority
+                    quality={100}
+                />
+            </div>
+
+            <div className=" flex flex-col justify-center items-center h-full  relative z-10">
+
+
+                {/* Service Tabs */}
+                <div className=" flex justify-center items-center gap-8 bg-white rounded-t-md shadow-md px-2 sm:px-10 py-5">
+                    <button
+                        onClick={() => setActiveTab('hotel')}
+                        className={` font-medium rounded-t-lg ${activeTab === 'hotel' ? ' text-blue-700' : ' text-black '}`}>
+                        Hotels
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('bus')}
+                        className={` font-medium rounded-t-lg  ${activeTab === 'bus' ? ' text-blue-700' : 'text-black'}`}>
+                        Bus
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('train')}
+                        className={` font-medium rounded-t-lg  ${activeTab === 'train' ? ' text-blue-700' : 'text-black'}`}>
+                        Train
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('ship')}
+                        className={` font-medium rounded-t-lg ${activeTab === 'ship' ? ' text-blue-700' : 'text-black'}`}>
+                        Ship
+                    </button>
                 </div>
-              )
-            }
 
-            {/* Mobile menu button - changes to close icon when sidebar is open */}
-            <div className="lg:hidden" onClick={() => setOpen(!open)}>
-              {open ? (
-                <MdClose className="text-3xl text-gray-700" />
-              ) : (
-                <MdMenu className="text-3xl text-gray-700" />
-              )}
+                {/* Dynamic Search Form */}
+                <div className="bg-white w-11/12 mx-auto bg-opacity-30 p-3 md:p-6  rounded-sm">
+                    {renderSearchForm()}
+
+                    <div className="mt-6 flex justify-center">
+                        <button className="bg-[#fdcc02] hover:shadow-lg text-[#00026e] font-bold py-3 px-8 rounded-lg ">
+                            Search {activeTab === 'hotel' ? 'Hotels' : activeTab === 'bus' ? 'Buses' : activeTab === 'train' ? 'Trains' : 'Ships'}
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </nav>
-
-      {/* Mobile sidebar */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, x: 200 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 200 }}
-            transition={{ duration: 0.3 }}
-            className="fixed scroll-auto top-0 right-0 w-64 h-full bg-white border-l z-40 pt-16">
-            <div className="w-full h-full p-6">
-              <ul className="flex flex-col gap-10">
-                {navItems.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center gap-6 p-2 hover:bg-gray-100 rounded-md cursor-pointer"
-                    onClick={() => setOpen(false)}>
-                    <span className="text-gray-800">{item.icon}</span>
-                    <span className="text-gray-900 text-sm font-medium">{item.name}</span>
-                  </li>
-                ))}
-                <li className="block p-2 text-gray-900 text-sm font-medium hover:bg-gray-100">Profile</li>
-                <li className="block p-2 text-gray-900 text-sm font-medium hover:bg-gray-100">My Booking</li>
-                <li className="block p-2 text-gray-900 text-sm font-medium hover:bg-gray-100">Saved</li>
-              </ul>
-              <div className="mt-8 flex flex-col gap-4">
-                <button className="flex justify-center items-center  gap-2 w-full font-semibold rounded-md border-2 px-3 py-2 border-secondary hover:bg-secondary hover:text-white text-sm">
-                  SignIn
-                </button>
-                <button className="flex justify-center items-center  gap-2 w-full font-semibold rounded-md border-2 px-3 py-2 border-secondary hover:bg-secondary hover:text-white text-sm">
-                  SignUp
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+    );
 };
 
-export default Navbar;
+export default Save;

@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { MdDirectionsBus, MdTrain, MdDirectionsBoat, MdContacts } from "react-icons/md";
 import { RiHotelFill } from "react-icons/ri";
-import self from "../../public/self.jpg";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -49,8 +48,9 @@ const Navbar = () => {
 
           {/* Profile and Login - visible on all devices */}
           <div className="flex items-center gap-4">
-            <div 
-              onClick={toggleDropdown} 
+            
+            <div
+              onClick={toggleDropdown}
               className="w-[42px] h-[42px] rounded-full text-sm overflow-hidden">
               <Image
                 referrerPolicy="no-referrer"
@@ -66,10 +66,10 @@ const Navbar = () => {
               Login
             </button>
           </div>
-          
+
           {/* Profile Dropdown */}
           {isDropdownOpen && (
-            <div className="z-50 my-4 text-base list-none bg-white rounded-sm shadow w-44 absolute top-[58px] right-[64px]">
+            <div className="z-50 my-4 text-base list-none bg-white rounded-b-sm shadow w-44 absolute top-[50px] right-[64px]">
               <div className="px-4 py-3">
                 <span className="block">Jahid Hasan</span>
               </div>
@@ -91,8 +91,8 @@ const Navbar = () => {
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-40  md:hidden">
         <ul className="w-11/12 mx-auto border- border-red-500 flex justify-around items-center py-3">
           {navItems.map((item, index) => (
-            <li 
-              key={index} 
+            <li
+              key={index}
               className="flex flex-col items-center gap-1 px-2">
               <span className="text-gray-800">{item.icon}</span>
               <span className="text-xs font-medium text-gray-900">
