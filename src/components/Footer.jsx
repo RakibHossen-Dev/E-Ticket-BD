@@ -14,9 +14,7 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
   const pathname = usePathname();
   const footerRef = useRef(null);
-  if (pathname.includes("login") || pathname.includes("register")) {
-    return null;
-  }
+
   useGSAP(() => {
     gsap.from(footerRef.current, {
       opacity: 0,
@@ -25,6 +23,9 @@ const Footer = () => {
       ease: "power3.out",
     });
   }, []);
+  if (pathname.includes("login") || pathname.includes("register")) {
+    return null;
+  }
   return (
     <footer
       ref={footerRef}
